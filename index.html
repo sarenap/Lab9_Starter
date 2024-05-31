@@ -69,21 +69,21 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button id="log">Console Log</button>
+      <button id="error">Console Error</button>
+      <button id="count">Console Count</button>
+      <button id="warn">Console Warn</button>
+      <button id="assert">Console Assert</button>
+      <button id="clear">Console Clear</button>
+      <button id="dir">Console Dir</button>
+      <button id="dirxml">Console dirxml</button>
+      <button id="groupStart">Console Group Start</button>
+      <button id="groupEnd">Console Group End</button>
+      <button id="table">Console Table</button>
+      <button id="startTimer">Start Timer</button>
+      <button id="endTimer">End Timer</button>
+      <button id="trace">Console Trace</button>
+      <button id="triggerError">Trigger a Global Error</button>
     </section>
   </main>
 
@@ -95,13 +95,72 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try {
+        if (firstNum === '' || secondNum === '') throw 'Empty input!';
+        if (isNaN(firstNum) || isNaN(secondNum)) throw 'Invalid number!';
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      } catch (err) {
+        output.innerHTML = 'Error: ' + err;
+      } finally {
+        console.log('Calculation attempt finished.');
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    errorBtns.forEach(btn => {
+      btn.addEventListener('click', e => {
+        let btnId = e.target.id;
+        switch (btnId) {
+          case 'log':
+            console.log('Console Log Demo');
+            break;
+          case 'error':
+            console.error('Console Error Demo');
+            break;
+          case 'count':
+            console.count('Console Count Demo');
+            break;
+          case 'warn':
+            console.warn('Console Warn Demo');
+            break;
+          case 'assert':
+            console.assert(false, 'Console Assert Demo');
+            break;
+          case 'clear':
+            console.clear();
+            break;
+          case 'dir':
+            console.dir(document.body);
+            break;
+          case 'dirxml':
+            console.dirxml(document.body);
+            break;
+          case 'groupStart':
+            console.group('Console Group Demo');
+            console.log('Inside group');
+            break;
+          case 'groupEnd':
+            console.groupEnd();
+            break;
+          case 'table':
+            console.table([{ name: 'Alice', age: 25 }, { name: 'Bob', age: 30 }]);
+            break;
+          case 'startTimer':
+            console.time('Timer');
+            break;
+          case 'endTimer':
+            console.timeEnd('Timer');
+            break;
+          case 'trace':
+            console.trace('Console Trace Demo');
+            break;
+          case 'triggerError':
+            nonExistentFunction(); // This will trigger a global error
+            break;
+        }
+      });
+    });
   </script>
 </body>
 
