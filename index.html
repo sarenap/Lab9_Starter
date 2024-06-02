@@ -69,24 +69,32 @@
     </form>
 
     <section id="error-btns">
-      <button id="log">Console Log</button>
-      <button id="error">Console Error</button>
-      <button id="count">Console Count</button>
-      <button id="warn">Console Warn</button>
-      <button id="assert">Console Assert</button>
-      <button id="clear">Console Clear</button>
-      <button id="dir">Console Dir</button>
-      <button id="dirxml">Console dirxml</button>
-      <button id="groupStart">Console Group Start</button>
-      <button id="groupEnd">Console Group End</button>
-      <button id="table">Console Table</button>
-      <button id="startTimer">Start Timer</button>
-      <button id="endTimer">End Timer</button>
-      <button id="trace">Console Trace</button>
-      <button id="triggerError">Trigger a Global Error</button>
+      <button>Console Log</button>
+      <button>Console Error</button>
+      <button>Console Count</button>
+      <button>Console Warn</button>
+      <button>Console Assert</button>
+      <button>Console Clear</button>
+      <button>Console Dir</button>
+      <button>Console dirxml</button>
+      <button>Console Group Start</button>
+      <button>Console Group End</button>
+      <button>Console Table</button>
+      <button>Start Timer</button>
+      <button>End Timer</button>
+      <button>Console Trace</button>
+      <button>Trigger a Global Error</button>
     </section>
   </main>
-
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "433678ddf35145b1a83d6f7f5026f015"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+    TrackJS.track('Testing TrackJS!');
+  </script>
+  
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -95,72 +103,96 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      try {
-        if (firstNum === '' || secondNum === '') throw 'Empty input!';
-        if (isNaN(firstNum) || isNaN(secondNum)) throw 'Invalid number!';
+      try{
+        if(firstNum === '' || secondNum === '') throw "nothing Is Present in Output"
+        if(isNaN(firstNum) || isNaN(secondNum)) throw "these are not valid numbers"
+        if(operator == '/' && secondNum == '0') throw "cannot Divide By Zero"
+
         output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-      } catch (err) {
-        output.innerHTML = 'Error: ' + err;
-      } finally {
-        console.log('Calculation attempt finished.');
       }
+      catch(error){
+        output.innerHTML = "Error is " + error;
+      }
+      finally{
+        console.log("Calculation achieved")
+      }
+
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    errorBtns.forEach(btn => {
-      btn.addEventListener('click', e => {
-        let btnId = e.target.id;
-        switch (btnId) {
-          case 'log':
-            console.log('Console Log Demo');
-            break;
-          case 'error':
-            console.error('Console Error Demo');
-            break;
-          case 'count':
-            console.count('Console Count Demo');
-            break;
-          case 'warn':
-            console.warn('Console Warn Demo');
-            break;
-          case 'assert':
-            console.assert(false, 'Console Assert Demo');
-            break;
-          case 'clear':
-            console.clear();
-            break;
-          case 'dir':
-            console.dir(document.body);
-            break;
-          case 'dirxml':
-            console.dirxml(document.body);
-            break;
-          case 'groupStart':
-            console.group('Console Group Demo');
-            console.log('Inside group');
-            break;
-          case 'groupEnd':
-            console.groupEnd();
-            break;
-          case 'table':
-            console.table([{ name: 'Alice', age: 25 }, { name: 'Bob', age: 30 }]);
-            break;
-          case 'startTimer':
-            console.time('Timer');
-            break;
-          case 'endTimer':
-            console.timeEnd('Timer');
-            break;
-          case 'trace':
-            console.trace('Console Trace Demo');
-            break;
-          case 'triggerError':
-            nonExistentFunction(); // This will trigger a global error
-            break;
-        }
-      });
+    // Start your code here
+    // You may move this JS to another file if you wish
+    errorBtns[0].addEventListener("click", ()=>{
+      console.log("Console Log");
     });
+    errorBtns[1].addEventListener("click", ()=>{
+      console.error("Console Error");
+    });
+    errorBtns[2].addEventListener("click", ()=>{
+      console.count("Console Count");
+    });
+    errorBtns[3].addEventListener("click", ()=>{
+      console.warn("Console Warn");
+    });
+    errorBtns[4].addEventListener("click", ()=>{
+      console.assert(false, "Console Assert");
+    });
+    errorBtns[5].addEventListener("click", ()=>{
+      console.clear();
+    });
+    errorBtns[6].addEventListener("click", ()=>{
+      console.dir(errorBtns[6]);
+    });
+    errorBtns[7].addEventListener("click", ()=>{
+      console.dirxml(errorBtns[7]);
+    });
+    errorBtns[8].addEventListener("click", ()=>{
+      console.group("Console Group");
+    });
+    errorBtns[9].addEventListener("click", ()=>{
+      console.groupEnd("Console Group End");
+    });
+    errorBtns[10].addEventListener("click", ()=>{
+      console.table([{name: "Software Engineering", nums: 110},
+        {name: "Programming Language Principles", nums: 130},
+        {name: "Advanced Software Engineering", nums: 112}]);
+    });
+    errorBtns[11].addEventListener("click", ()=>{
+      console.time("Console Timer");
+    });
+    errorBtns[12].addEventListener("click", ()=>{
+      console.timeEnd("Console Timer");
+    });
+    errorBtns[13].addEventListener("click", ()=>{
+      function thirdLevel(){
+        console.trace("Console Trace");
+      }
+      function secondLevel(){
+        thirdLevel();
+      }
+      function firstLevel(){
+        secondLevel();
+      }
+      function zeroLevel(){
+        firstLevel();
+      }
+      zeroLevel();
+    });
+
+
+    errorBtns[14].addEventListener("click", ()=>{
+      throw new Error("Unknown Abort Site ASAP");
+    });
+
+
+
+
+    
+
+
+
+
   </script>
 </body>
 
